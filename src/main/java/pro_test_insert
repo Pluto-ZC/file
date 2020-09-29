@@ -1,0 +1,16 @@
+excel导入数据库的存储过程
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pro_test_insert`(IN vi_tbname VARCHAR ( 50 ), IN vi_data longtext)
+BEGIN
+	DECLARE
+		v_sql longtext;
+
+	SET v_sql = concat( 'insert into ', vi_tbname, ' values ', vi_data);
+	SET @ms = v_sql;
+	PREPARE s1
+	FROM
+		@ms;
+	EXECUTE s1;
+	DEALLOCATE PREPARE s1;
+	COMMIT;
+	end
